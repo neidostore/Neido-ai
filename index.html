@@ -333,7 +333,38 @@ async function sendMessage() {
         .eq('user_id', currentUser.id);
     }
 
-    const reply = 'He guardado tu mensaje en NEIDO AI. El motor de inteligencia artificial todavía no está conectado. En el siguiente paso lo conectaremos para que puedas conversar conmigo de verdad.';
+        const { data: chatMessages, error: historyError } = await supabase
+      .from('messages')
+      .select('role, content')
+      .eq('conversation_id', currentConversation)
+      .eq('user_id', currentUser.id)
+      .order('created_at', { ascending: true })
+      .limit(20);
+
+    if (historyError) throw historyError;
+
+    const aiResponse = await fetch(
+      'https://neido-ai-cerebro.neidostore.workers.dev/',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          messages: chatMessages || []
+        })
+      }
+    );
+
+    const aiData = await aiResponse.json();
+
+    if (!aiResponse.ok) {
+      throw new Error(
+        aiData.error || 'No se pudo conectar con DeepSeek.'
+      );
+    }
+
+    const reply = aiData.reply;
     addMessage('assistant', reply);
     await saveMessage('assistant', reply);
     await loadConversations();
