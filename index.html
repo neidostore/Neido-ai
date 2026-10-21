@@ -4,488 +4,483 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#050816">
-<meta name="description" content="NEIDO AI, tu inteligencia artificial. Tus reglas.">
 <title>NEIDO AI</title>
-
 <style>
 :root {
-    --fondo: #050816;
-    --panel: #0b1224;
-    --azul: #168cff;
-    --cian: #00e5ff;
-    --texto: #eef5ff;
-    --secundario: #91a5c5;
+  --bg:#050816;
+  --panel:#0c1328;
+  --blue:#168bff;
+  --cyan:#35e5ff;
+  --text:#eef5ff;
+  --muted:#94a5c6;
+  --border:#1b2b4b;
 }
-
-* {
-    box-sizing: border-box;
-}
-
+* {box-sizing:border-box}
 body {
-    margin: 0;
-    min-height: 100vh;
-    background:
-        radial-gradient(ellipse at top, #10254b 0%, transparent 55%),
-        var(--fondo);
-    color: var(--texto);
-    font-family: Arial, Helvetica, sans-serif;
-    display: flex;
-    flex-direction: column;
+  margin:0;
+  background:radial-gradient(ellipse at top,#102347 0%,var(--bg) 60%);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+  min-height:100vh;
 }
-
+button,input,textarea {font:inherit}
+button {cursor:pointer}
+button:disabled {opacity:.5;cursor:wait}
+.hidden {display:none!important}
 header {
-    padding: 20px 16px;
-    border-bottom: 1px solid #1b3154;
-    background: rgba(5, 8, 22, .92);
-    position: sticky;
-    top: 0;
-    z-index: 2;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 22px;border-bottom:1px solid var(--border);
+  background:#050816eF;position:sticky;top:0;z-index:5;
 }
-
-.cabecera {
-    max-width: 850px;
-    margin: auto;
-    display: flex;
-    align-items: center;
-    gap: 13px;
-}
-
+.brand {display:flex;align-items:center;gap:12px}
 .logo {
-    width: 49px;
-    height: 49px;
-    border: 2px solid var(--cian);
-    border-radius: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-size: 30px;
-    font-weight: 900;
-    font-style: italic;
-    box-shadow: 0 0 20px #008cff70;
-    text-shadow: 0 0 15px var(--cian);
+  width:44px;height:44px;border:2px solid var(--cyan);
+  border-radius:14px;display:grid;place-items:center;
+  color:var(--cyan);font-size:27px;font-weight:900;
+  box-shadow:0 0 18px #168bff55;
 }
-
-h1 {
-    margin: 0;
-    font-size: 23px;
-    letter-spacing: 3px;
+.brand h1 {margin:0;font-size:21px;letter-spacing:2px}
+.brand small {display:block;color:var(--muted);font-size:11px;margin-top:4px}
+button,.button {
+  border:1px solid #237bd4;background:#10264a;color:white;
+  border-radius:10px;padding:11px 15px;
 }
-
-.subtitulo {
-    color: var(--cian);
-    font-size: 11px;
-    margin-top: 5px;
-    letter-spacing: 1px;
+button.primary {background:linear-gradient(100deg,#0878ef,#13b8e8);border:0;font-weight:bold}
+button:hover {filter:brightness(1.15)}
+input,textarea {
+  width:100%;background:#060d20;color:white;
+  border:1px solid #263b61;border-radius:10px;padding:13px;
+  outline:none;
 }
-
-main {
-    width: 100%;
-    max-width: 850px;
-    margin: auto;
-    padding: 22px 15px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+input:focus,textarea:focus {border-color:var(--cyan)}
+.container {max-width:1000px;margin:auto;padding:24px 16px}
+.card {
+  background:#0c1328eF;border:1px solid var(--border);
+  border-radius:18px;padding:22px;
 }
-
-.bienvenida {
-    text-align: center;
-    margin: 18px 0 25px;
+h2 {margin-top:0}
+.muted {color:var(--muted);font-size:14px;line-height:1.6}
+label {display:block;font-size:13px;color:#c8d8f5;margin:14px 0 7px}
+.form {max-width:440px;margin:35px auto}
+.form button {width:100%;margin-top:12px}
+.status {min-height:24px;color:var(--cyan);font-size:13px;margin-top:12px}
+.app-layout {display:grid;grid-template-columns:250px 1fr;gap:18px}
+.sidebar {min-width:0}
+.conversation-list {display:grid;gap:8px;margin-top:15px}
+.conversation-item {text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.conversation-item.active {border-color:var(--cyan);background:#10294c}
+.chat-card {min-height:65vh;display:flex;flex-direction:column}
+.chat-heading {padding-bottom:15px;border-bottom:1px solid var(--border)}
+.messages {flex:1;min-height:260px;max-height:55vh;overflow-y:auto;padding:15px 0}
+.message {margin:12px 0;display:flex}
+.message.user {justify-content:flex-end}
+.bubble {
+  white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;
+  padding:12px 15px;border-radius:14px;max-width:90%;
+  background:#101e39;border:1px solid #1d3153;
 }
-
-.bienvenida h2 {
-    font-size: clamp(25px, 6vw, 38px);
-    margin: 0 0 12px;
-}
-
-.bienvenida h2 span {
-    color: var(--cian);
-    text-shadow: 0 0 20px #008cff60;
-}
-
-.bienvenida p {
-    color: var(--secundario);
-    line-height: 1.6;
-    font-size: 14px;
-}
-
-.estado {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    font-size: 12px;
-    color: #70f7bb;
-    margin-top: 7px;
-}
-
-.punto {
-    width: 7px;
-    height: 7px;
-    background: #40f5a1;
-    border-radius: 50%;
-    box-shadow: 0 0 9px #40f5a1;
-}
-
-#chat {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    padding-bottom: 20px;
-}
-
-.mensaje {
-    max-width: 88%;
-    padding: 14px 16px;
-    border-radius: 17px;
-    line-height: 1.55;
-    font-size: 15px;
-    overflow-wrap: anywhere;
-    white-space: pre-wrap;
-}
-
-.bot {
-    align-self: flex-start;
-    background: var(--panel);
-    border: 1px solid #20375d;
-    border-bottom-left-radius: 5px;
-}
-
-.usuario {
-    align-self: flex-end;
-    background: linear-gradient(135deg, #075bbd, #087be7);
-    border-bottom-right-radius: 5px;
-}
-
-.nombre {
-    display: block;
-    color: var(--cian);
-    font-size: 11px;
-    font-weight: bold;
-    margin-bottom: 6px;
-    letter-spacing: 1px;
-}
-
-.usuario .nombre {
-    color: #d9f5ff;
-}
-
-.sugerencias {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 9px;
-    margin: 10px 0 22px;
-}
-
-.sugerencia {
-    background: #0c1830;
-    color: #d6e9ff;
-    border: 1px solid #24436c;
-    border-radius: 22px;
-    padding: 10px 13px;
-    font-size: 12px;
-    cursor: pointer;
-}
-
-.sugerencia:active {
-    background: #143568;
-}
-
-.compositor {
-    margin-top: auto;
-    background: #0b1224;
-    border: 1px solid #29446c;
-    border-radius: 20px;
-    padding: 10px;
-    box-shadow: 0 0 25px #006eff15;
-}
-
-#entrada {
-    width: 100%;
-    min-height: 48px;
-    max-height: 130px;
-    resize: vertical;
-    background: transparent;
-    color: white;
-    border: none;
-    outline: none;
-    padding: 12px 8px;
-    font-size: 16px;
-    font-family: inherit;
-}
-
-#entrada::placeholder {
-    color: #7f91ad;
-}
-
-.botones {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-}
-
-.ayuda {
-    color: #8498b7;
-    font-size: 11px;
-    padding-left: 5px;
-}
-
-.grupo {
-    display: flex;
-    gap: 8px;
-}
-
-.boton {
-    border: 1px solid #315078;
-    background: #111f38;
-    color: white;
-    border-radius: 13px;
-    min-width: 44px;
-    height: 44px;
-    cursor: pointer;
-    font-size: 19px;
-}
-
-.boton:hover {
-    border-color: var(--cian);
-}
-
-.enviar {
-    background: linear-gradient(135deg, #087bff, #00aaff);
-    border: none;
-    font-size: 14px;
-    font-weight: bold;
-    padding: 0 17px;
-    box-shadow: 0 0 15px #008cff35;
-}
-
-footer {
-    text-align: center;
-    color: #627594;
-    font-size: 11px;
-    padding: 18px 12px;
-}
-
-button:focus-visible {
-    outline: 2px solid var(--cian);
-    outline-offset: 3px;
-}
-
-@media (max-width: 480px) {
-    main {
-        padding: 15px 12px;
-    }
-
-    .bienvenida {
-        margin-top: 15px;
-    }
-
-    .mensaje {
-        max-width: 94%;
-    }
-
-    .ayuda {
-        font-size: 10px;
-    }
+.message.user .bubble {background:#0b477d;border-color:#167fcb}
+.composer {display:flex;gap:9px;align-items:flex-end;padding-top:12px;border-top:1px solid var(--border)}
+.composer textarea {resize:vertical;min-height:48px;max-height:140px}
+.composer button {min-height:48px}
+.actions {display:flex;gap:8px;flex-wrap:wrap}
+footer {text-align:center;color:#637695;padding:24px;font-size:12px}
+@media(max-width:700px) {
+  header {padding:13px}
+  .brand h1 {font-size:18px}
+  .brand small {font-size:10px}
+  .container {padding:14px 10px}
+  .app-layout {grid-template-columns:1fr}
+  .sidebar {padding:15px}
+  .conversation-list {grid-template-columns:1fr 1fr}
+  .conversation-item {font-size:12px;padding:9px}
+  .chat-card {min-height:55vh;padding:15px}
+  .messages {max-height:50vh}
+  .composer {gap:6px}
+  .composer button {padding:10px}
 }
 </style>
 </head>
-
 <body>
 
 <header>
-    <div class="cabecera">
-        <div class="logo">N</div>
-        <div>
-            <h1>NEIDO AI</h1>
-            <div class="subtitulo">TU INTELIGENCIA. TUS REGLAS.</div>
-        </div>
+  <div class="brand">
+    <div class="logo">N</div>
+    <div>
+      <h1>NEIDO AI</h1>
+      <small>Tu inteligencia artificial. Tus reglas.</small>
     </div>
+  </div>
+  <button id="logoutBtn" class="hidden">Cerrar sesión</button>
 </header>
 
-<main>
-    <section class="bienvenida">
-        <h2>Hola, soy <span>NEIDO</span></h2>
-        <p>Estoy aquí para ayudarte, resolver tus dudas<br>
-        y explorar nuevas ideas contigo.</p>
-        <div class="estado">
-            <span class="punto"></span>
-            Interfaz preparada
-        </div>
-    </section>
+<main class="container">
 
-    <section id="chat" aria-live="polite">
-        <div class="mensaje bot">
-            <span class="nombre">NEIDO AI</span>
-            ¡Bienvenido! 💙 Esta es mi primera pantalla.
-            Pronto podremos conversar sobre cualquier tema,
-            tanto escribiendo como hablando.
-        </div>
-    </section>
+  <section id="authScreen" class="card form">
+    <h2>Bienvenido a NEIDO AI</h2>
+    <p class="muted">Entra en tu cuenta o crea una nueva. Cada usuario tendrá sus propias conversaciones.</p>
 
-    <div class="sugerencias">
-        <button class="sugerencia" data-text="Ayúdame a aprender algo nuevo">🧠 Aprender</button>
-        <button class="sugerencia" data-text="Ayúdame a organizar mi día">📅 Organizarme</button>
-        <button class="sugerencia" data-text="Dame una idea original">💡 Inspiración</button>
+    <label for="email">Correo electrónico</label>
+    <input id="email" type="email" autocomplete="email" placeholder="tu@email.com">
+
+    <label for="password">Contraseña</label>
+    <input id="password" type="password" autocomplete="current-password" placeholder="Mínimo 6 caracteres">
+
+    <button id="loginBtn" class="primary">Iniciar sesión</button>
+    <button id="signupBtn">Crear cuenta nueva</button>
+    <div id="authStatus" class="status" role="status"></div>
+    <p class="muted">Usa una dirección de correo a la que tengas acceso. Si Supabase solicita confirmar el correo, revisa tu bandeja de entrada.</p>
+  </section>
+
+  <section id="appScreen" class="hidden">
+    <div class="app-layout">
+      <aside class="card sidebar">
+        <h2 style="font-size:17px">Tus conversaciones</h2>
+        <button id="newChatBtn" class="primary" style="width:100%">+ Nueva conversación</button>
+        <div id="conversationList" class="conversation-list"></div>
+        <p class="muted">Tus conversaciones se guardan en tu cuenta.</p>
+      </aside>
+
+      <section class="card chat-card">
+        <div class="chat-heading">
+          <h2 id="chatTitle" style="font-size:20px;margin-bottom:6px">NEIDO AI</h2>
+          <div class="muted" id="welcomeText">Tu espacio privado.</div>
+        </div>
+
+        <div id="messages" class="messages" aria-live="polite"></div>
+
+        <div class="composer">
+          <textarea id="messageInput" placeholder="Escribe tu mensaje..." aria-label="Escribe tu mensaje"></textarea>
+          <div class="actions">
+            <button id="micBtn" title="Dictar mensaje" aria-label="Dictar mensaje">🎙️</button>
+            <button id="sendBtn" class="primary">Enviar</button>
+          </div>
+        </div>
+        <p class="muted">La conexión con el motor de inteligencia artificial todavía está pendiente.</p>
+        <div id="chatStatus" class="status" role="status"></div>
+      </section>
     </div>
-
-    <section class="compositor">
-        <textarea id="entrada" rows="2"
-            placeholder="Escribe aquí lo que quieras preguntar..."
-            aria-label="Escribe tu mensaje"></textarea>
-
-        <div class="botones">
-            <span class="ayuda">Tu espacio de conversación</span>
-            <div class="grupo">
-                <button class="boton" id="microfono"
-                    title="Hablar por el micrófono"
-                    aria-label="Hablar por el micrófono">🎙️</button>
-                <button class="boton" id="voz"
-                    title="Activar o desactivar la lectura en voz alta"
-                    aria-label="Activar o desactivar la voz">🔊</button>
-                <button class="boton enviar" id="enviar">Enviar ➤</button>
-            </div>
-        </div>
-    </section>
+  </section>
 </main>
 
-<footer>
-    NEIDO AI · Una nueva forma de pensar
-</footer>
+<footer>NEIDO AI · Tu inteligencia artificial. Tus reglas.</footer>
 
-<script>
-const entrada = document.getElementById('entrada');
-const chat = document.getElementById('chat');
-const botonEnviar = document.getElementById('enviar');
-const botonMicrofono = document.getElementById('microfono');
-const botonVoz = document.getElementById('voz');
+<script type="module">
+import { createClient } from
+  'https://esm.sh/@supabase/supabase-js@2';
 
-let vozActiva = true;
+const SUPABASE_URL = 'https://mqcffhcrqtcwdvamngou.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_d7rXj-SXPS87sowJCqhuxQ_pZJ1xFeV';
 
-function agregarMensaje(texto, tipo) {
-    const mensaje = document.createElement('div');
-    mensaje.className = 'mensaje ' + tipo;
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    const nombre = document.createElement('span');
-    nombre.className = 'nombre';
-    nombre.textContent = tipo === 'usuario' ? 'TÚ' : 'NEIDO AI';
+const $ = id => document.getElementById(id);
 
-    const contenido = document.createElement('div');
-    contenido.textContent = texto;
+let currentUser = null;
+let currentConversation = null;
+let busy = false;
 
-    mensaje.appendChild(nombre);
-    mensaje.appendChild(contenido);
-    chat.appendChild(mensaje);
-
-    mensaje.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+function setStatus(id, message) {
+  $(id).textContent = message || '';
 }
 
-function hablar(texto) {
-    if (!vozActiva || !('speechSynthesis' in window)) return;
-
-    window.speechSynthesis.cancel();
-
-    const mensaje = new SpeechSynthesisUtterance(texto);
-    mensaje.lang = 'es-ES';
-    mensaje.rate = 0.95;
-    mensaje.pitch = 0.85;
-
-    const voces = window.speechSynthesis.getVoices();
-    const vozEspanola = voces.find(v => v.lang === 'es-ES')
-        || voces.find(v => v.lang.startsWith('es'));
-
-    if (vozEspanola) mensaje.voice = vozEspanola;
-
-    window.speechSynthesis.speak(mensaje);
+function showScreen(screen) {
+  $('authScreen').classList.toggle('hidden', screen !== 'auth');
+  $('appScreen').classList.toggle('hidden', screen !== 'app');
+  $('logoutBtn').classList.toggle('hidden', screen !== 'app');
 }
 
-function responderDemo(texto) {
-    return 'He recibido tu mensaje: "' + texto + '".\n\n' +
-        'Todavía estamos construyendo NEIDO AI. ' +
-        'El siguiente paso será conectarme a un modelo de inteligencia artificial ' +
-        'para poder responder de verdad a tus preguntas.';
+function addMessage(role, content) {
+  const row = document.createElement('div');
+  row.className = 'message ' + (role === 'user' ? 'user' : 'assistant');
+
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  bubble.textContent = content;
+
+  row.appendChild(bubble);
+  $('messages').appendChild(row);
+  $('messages').scrollTop = $('messages').scrollHeight;
 }
 
-function enviarMensaje(textoPersonalizado) {
-    const texto = (textoPersonalizado || entrada.value).trim();
-    if (!texto) return;
+async function loadConversations() {
+  const { data, error } = await supabase
+    .from('conversations')
+    .select('id,title,created_at,updated_at')
+    .eq('user_id', currentUser.id)
+    .order('updated_at', { ascending: false });
 
-    agregarMensaje(texto, 'usuario');
-    entrada.value = '';
+  if (error) throw error;
 
-    const respuesta = responderDemo(texto);
-    agregarMensaje(respuesta, 'bot');
-    hablar(respuesta);
+  const list = $('conversationList');
+  list.replaceChildren();
+
+  for (const conversation of (data || [])) {
+    const button = document.createElement('button');
+    button.className = 'conversation-item' +
+      (conversation.id === currentConversation ? ' active' : '');
+    button.textContent = conversation.title;
+    button.title = conversation.title;
+    button.addEventListener('click', () => openConversation(conversation.id));
+    list.appendChild(button);
+  }
 }
 
-botonEnviar.addEventListener('click', () => enviarMensaje());
+async function createConversation() {
+  const { data, error } = await supabase
+    .from('conversations')
+    .insert({ user_id: currentUser.id, title: 'Nueva conversación' })
+    .select('id,title')
+    .single();
 
-entrada.addEventListener('keydown', evento => {
-    if (evento.key === 'Enter' && !evento.shiftKey) {
-        evento.preventDefault();
-        enviarMensaje();
+  if (error) throw error;
+
+  currentConversation = data.id;
+  $('chatTitle').textContent = data.title;
+  $('messages').replaceChildren();
+  await loadConversations();
+}
+
+async function openConversation(id) {
+  setStatus('chatStatus', 'Cargando conversación...');
+
+  const { data: conversation, error: conversationError } = await supabase
+    .from('conversations')
+    .select('id,title')
+    .eq('id', id)
+    .eq('user_id', currentUser.id)
+    .single();
+
+  if (conversationError) {
+    setStatus('chatStatus', 'No se pudo abrir la conversación.');
+    return;
+  }
+
+  currentConversation = conversation.id;
+  $('chatTitle').textContent = conversation.title;
+  $('messages').replaceChildren();
+
+  const { data, error } = await supabase
+    .from('messages')
+    .select('role,content,created_at')
+    .eq('conversation_id', id)
+    .eq('user_id', currentUser.id)
+    .order('created_at', { ascending: true });
+
+  if (error) {
+    setStatus('chatStatus', 'No se pudieron cargar los mensajes.');
+    return;
+  }
+
+  for (const message of (data || [])) {
+    addMessage(message.role, message.content);
+  }
+
+  await loadConversations();
+  setStatus('chatStatus', '');
+}
+
+async function saveMessage(role, content) {
+  const { error } = await supabase.from('messages').insert({
+    conversation_id: currentConversation,
+    user_id: currentUser.id,
+    role,
+    content
+  });
+
+  if (error) throw error;
+}
+
+async function sendMessage() {
+  const text = $('messageInput').value.trim();
+  if (!text || busy) return;
+
+  if (!currentConversation) {
+    try {
+      await createConversation();
+    } catch (error) {
+      setStatus('chatStatus', 'No se pudo crear la conversación. Revisa la configuración de Supabase.');
+      return;
     }
-});
+  }
 
-document.querySelectorAll('.sugerencia').forEach(boton => {
-    boton.addEventListener('click', () => {
-        enviarMensaje(boton.dataset.text);
-    });
-});
+  busy = true;
+  $('sendBtn').disabled = true;
+  $('messageInput').value = '';
+  setStatus('chatStatus', 'Guardando mensaje...');
 
-botonVoz.addEventListener('click', () => {
-    vozActiva = !vozActiva;
-    botonVoz.textContent = vozActiva ? '🔊' : '🔇';
+  try {
+    addMessage('user', text);
+    await saveMessage('user', text);
 
-    if (!vozActiva && 'speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
+    const { data: existing } = await supabase
+      .from('messages')
+      .select('id')
+      .eq('conversation_id', currentConversation)
+      .eq('user_id', currentUser.id);
+
+    if ((existing || []).length === 1) {
+      const title = text.length > 42 ? text.slice(0, 39) + '...' : text;
+      await supabase.from('conversations')
+        .update({ title, updated_at: new Date().toISOString() })
+        .eq('id', currentConversation)
+        .eq('user_id', currentUser.id);
+      $('chatTitle').textContent = title;
+    } else {
+      await supabase.from('conversations')
+        .update({ updated_at: new Date().toISOString() })
+        .eq('id', currentConversation)
+        .eq('user_id', currentUser.id);
     }
+
+    const reply = 'He guardado tu mensaje en NEIDO AI. El motor de inteligencia artificial todavía no está conectado. En el siguiente paso lo conectaremos para que puedas conversar conmigo de verdad.';
+    addMessage('assistant', reply);
+    await saveMessage('assistant', reply);
+    await loadConversations();
+    setStatus('chatStatus', 'Conversación guardada.');
+  } catch (error) {
+    console.error(error);
+    setStatus('chatStatus', 'Hubo un problema al guardar. Comprueba tu conexión y los permisos de Supabase.');
+  } finally {
+    busy = false;
+    $('sendBtn').disabled = false;
+    $('messageInput').focus();
+  }
+}
+
+async function enterApp(user) {
+  currentUser = user;
+  currentConversation = null;
+  showScreen('app');
+  $('welcomeText').textContent = 'Sesión iniciada: ' + user.email;
+  $('messages').replaceChildren();
+  setStatus('chatStatus', 'Cargando tus conversaciones...');
+
+  try {
+    await loadConversations();
+    const first = $('conversationList').firstElementChild;
+    if (first) {
+      await openConversation(first.className.includes('conversation-item')
+        ? [...$('conversationList').children].findIndex(b => b === first) >= 0
+          ? (await supabase.from('conversations').select('id').eq('user_id', user.id).order('updated_at', { ascending: false }).limit(1)).data?.[0]?.id
+          : null
+        : null);
+    } else {
+      await createConversation();
+      addMessage('assistant', '¡Hola! Soy NEIDO AI. Tu espacio privado está preparado. La conexión con la IA real será el siguiente paso.');
+    }
+  } catch (error) {
+    console.error(error);
+    setStatus('chatStatus', 'No se pudieron cargar las conversaciones. Revisa las tablas y políticas de Supabase.');
+  }
+  setStatus('chatStatus', '');
+}
+
+$('loginBtn').addEventListener('click', async () => {
+  const email = $('email').value.trim();
+  const password = $('password').value;
+  setStatus('authStatus', 'Entrando...');
+
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+  if (error) {
+    setStatus('authStatus', 'No se pudo iniciar sesión: ' + error.message);
+    return;
+  }
+  await enterApp(data.user);
 });
 
-const ReconocimientoVoz =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
+$('signupBtn').addEventListener('click', async () => {
+  const email = $('email').value.trim();
+  const password = $('password').value;
 
-if (ReconocimientoVoz) {
-    const reconocimiento = new ReconocimientoVoz();
-    reconocimiento.lang = 'es-ES';
-    reconocimiento.interimResults = false;
+  if (!email || password.length < 6) {
+    setStatus('authStatus', 'Introduce un correo válido y una contraseña de al menos 6 caracteres.');
+    return;
+  }
 
-    botonMicrofono.addEventListener('click', () => {
-        try {
-            reconocimiento.start();
-            botonMicrofono.textContent = '⏺️';
-        } catch (error) {
-            botonMicrofono.textContent = '🎙️';
-        }
-    });
+  setStatus('authStatus', 'Creando cuenta...');
 
-    reconocimiento.onresult = evento => {
-        entrada.value = evento.results[0][0].transcript;
-        enviarMensaje();
-    };
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      emailRedirectTo: 'https://neidostore.github.io/Neido-ai/'
+    }
+  });
 
-    reconocimiento.onend = () => {
-        botonMicrofono.textContent = '🎙️';
-    };
+  if (error) {
+    setStatus('authStatus', 'No se pudo crear la cuenta: ' + error.message);
+    return;
+  }
 
-    reconocimiento.onerror = () => {
-        botonMicrofono.textContent = '🎙️';
-        agregarMensaje(
-            'No he podido acceder al micrófono. Comprueba los permisos del navegador.',
-            'bot'
-        );
-    };
+  if (data.session && data.user) {
+    await enterApp(data.user);
+  } else {
+    setStatus('authStatus', 'Cuenta creada. Revisa tu correo para confirmar el registro y después inicia sesión.');
+  }
+});
+
+$('logoutBtn').addEventListener('click', async () => {
+  await supabase.auth.signOut();
+  currentUser = null;
+  currentConversation = null;
+  showScreen('auth');
+  setStatus('authStatus', 'Has cerrado sesión.');
+});
+
+$('newChatBtn').addEventListener('click', async () => {
+  try {
+    await createConversation();
+    addMessage('assistant', 'Nueva conversación preparada. Puedes escribir tu mensaje.');
+    setStatus('chatStatus', '');
+  } catch (error) {
+    setStatus('chatStatus', 'No se pudo crear la conversación.');
+  }
+});
+
+$('sendBtn').addEventListener('click', sendMessage);
+
+$('messageInput').addEventListener('keydown', event => {
+  if (event.key === 'Enter' && !event.shiftKey) {
+    event.preventDefault();
+    sendMessage();
+  }
+});
+
+$('micBtn').addEventListener('click', () => {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if (!SpeechRecognition) {
+    setStatus('chatStatus', 'El dictado no está disponible en este navegador. Puedes escribir el mensaje.');
+    return;
+  }
+
+  const recognition = new SpeechRecognition();
+  recognition.lang = 'es-ES';
+  recognition.interimResults = false;
+  recognition.onresult = event => {
+    $('messageInput').value += event.results[0][0].transcript;
+    $('messageInput').focus();
+  };
+  recognition.onerror = () => setStatus('chatStatus', 'No se pudo usar el micrófono. Comprueba los permisos del navegador.');
+  recognition.start();
+});
+
+supabase.auth.onAuthStateChange((event, session) => {
+  if (event === 'SIGNED_OUT') {
+    currentUser = null;
+    currentConversation = null;
+    showScreen('auth');
+  }
+});
+
+const { data: { session } } = await supabase.auth.getSession();
+if (session?.user) {
+  await enterApp(session.user);
 } else {
-    botonMicrofono.addEventListener('click', () => {
-        agregarMensaje(
-            'El reconocimiento de voz no está disponible en este navegador. Prueba con Chrome.',
-            'bot'
-        );
-    });
+  showScreen('auth');
 }
 </script>
-
 </body>
 </html>
