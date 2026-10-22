@@ -370,12 +370,8 @@ async function sendMessage() {
 
     const reply = aiData.reply;
     addMessage('assistant', reply);
-speechSynthesis.cancel();
-const vozNeido = new SpeechSynthesisUtterance(reply);
-vozNeido.lang = 'es-ES';
 if (voiceEnabled) {
-speechSynthesis.cancel();
-speechSynthesis.speak(vozNeido);
+  hablarConSanta(reply);
 }
 
     await saveMessage('assistant', reply);
@@ -402,6 +398,35 @@ $('voiceBtn').addEventListener('click', () => {
     $('voiceBtn').textContent = '🔊';
   }
 });
+let kokoroClient = null;
+
+async function hablarConSanta(texto) {
+try {
+if (!kokoroClient) {
+const { Client } = await import('https://esm.sh/@gradio/client');
+kokoroClient = await Client.connect('igortamara/Kokoro-es-TTS');
+}
+
+```
+const resultado = await kokoroClient.predict('/generate_first', {
+  text: texto,
+  voice: 'em_santa',
+  speed: 1,
+  use_gpu: 'false'
+});
+
+const audioInfo = resultado.data[0];
+const audioUrl = audioInfo.url;
+
+const reproductor = new Audio(audioUrl);
+await reproductor.play();
+```
+
+} catch (error) {
+console.error('Error en la voz neuronal:', error);
+setStatus('chatStatus', 'No se ha podido generar la voz. Puedes seguir usando el chat.');
+}
+}
 
 async function enterApp(user) {
   currentUser = user;
