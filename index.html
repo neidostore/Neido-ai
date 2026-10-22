@@ -181,7 +181,7 @@ const $ = id => document.getElementById(id);
 let currentUser = null;
 let currentConversation = null;
 let busy = false;
-  let voiceEnabled = true;
+let voiceEnabled = true;
 
 
 function setStatus(id, message) {
@@ -389,7 +389,19 @@ speechSynthesis.speak(vozNeido);
     $('sendBtn').disabled = false;
     $('messageInput').focus();
   }
-}
+  }
+
+
+$('voiceBtn').addEventListener('click', () => {
+  voiceEnabled = !voiceEnabled;
+
+  if (!voiceEnabled) {
+    speechSynthesis.cancel();
+    $('voiceBtn').textContent = '🔇';
+  } else {
+    $('voiceBtn').textContent = '🔊';
+  }
+});
 
 async function enterApp(user) {
   currentUser = user;
