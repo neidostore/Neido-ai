@@ -366,6 +366,10 @@ async function sendMessage() {
 
     const reply = aiData.reply;
     addMessage('assistant', reply);
+speechSynthesis.cancel();
+const vozNeido = new SpeechSynthesisUtterance(reply);
+vozNeido.lang = 'es-ES';
+speechSynthesis.speak(vozNeido);;
     await saveMessage('assistant', reply);
     await loadConversations();
     setStatus('chatStatus', 'Conversación guardada.');
