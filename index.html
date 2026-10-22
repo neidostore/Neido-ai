@@ -424,7 +424,7 @@ await reproductor.play();
 
 } catch (error) {
 console.error('Error en la voz neuronal:', error);
-setStatus('chatStatus', 'No se ha podido generar la voz. Puedes seguir usando el chat.');
+setStatus('chatStatus', 'Error de voz: ' + (error?.message || String(error)));
 }
 }
 
