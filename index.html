@@ -181,6 +181,8 @@ const $ = id => document.getElementById(id);
 let currentUser = null;
 let currentConversation = null;
 let busy = false;
+  let voiceEnabled = true;
+
 
 function setStatus(id, message) {
   $(id).textContent = message || '';
