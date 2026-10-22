@@ -371,7 +371,11 @@ async function sendMessage() {
 speechSynthesis.cancel();
 const vozNeido = new SpeechSynthesisUtterance(reply);
 vozNeido.lang = 'es-ES';
-speechSynthesis.speak(vozNeido);;
+if (voiceEnabled) {
+speechSynthesis.cancel();
+speechSynthesis.speak(vozNeido);
+}
+
     await saveMessage('assistant', reply);
     await loadConversations();
     setStatus('chatStatus', 'Conversación guardada.');
