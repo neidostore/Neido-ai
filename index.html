@@ -378,7 +378,7 @@ async function sendMessage() {
   .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
     addMessage('assistant', reply);
 if (voiceEnabled) {
-  hablarConSanta(reply);
+  hablarConSanta(textoParaVoz);
 }
 
     await saveMessage('assistant', reply);
