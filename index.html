@@ -401,34 +401,54 @@ $('voiceBtn').addEventListener('click', () => {
 });
 let kokoroClient = null;
 
+```javascript
 async function hablarConSanta(texto) {
-try {
-if (!kokoroClient) {
-const { Client } = await import('https://cdn.jsdelivr.net/npm/@gradio/client/+esm');
-kokoroClient = await Client.connect('igortamara/Kokoro-es-TTS');
-}
+  try {
+    setStatus('chatStatus', 'Generando la voz de NEIDO...');
 
+    if (!kokoroClient) {
+      const { Client } = await import(
+        'https://cdn.jsdelivr.net/npm/@gradio/client/+esm'
+      );
+
+      kokoroClient = await Client.connect(
+        'igortamara/Kokoro-es-TTS'
+      );
+    }
+
+    const resultado = await kokoroClient.predict('/generate_first', [
+      texto,
+      'em_santa',
+      1,
+      false
+    ]);
+
+    console.log('Resultado de voz:', resultado);
+
+    const audioInfo = resultado?.data?.[0];
+    const audioUrl = audioInfo?.url;
+
+    if (!audioUrl) {
+      throw new Error('El servicio no ha devuelto una dirección de audio.');
+    }
+
+    const reproductor = new Audio(audioUrl);
+    await reproductor.play();
+
+    setStatus('chatStatus', '');
+
+  } catch (error) {
+    console.error('Error en la voz neuronal:', error);
+
+    setStatus(
+      'chatStatus',
+      'No se ha podido reproducir la voz: ' +
+      (error?.message || String(error))
+    );
+  }
+}
 ```
-const resultado = await kokoroClient.predict('/generate_first', [
-  texto,
-  'em_santa',
-  1,
-  false
-]);
-const audioInfo = resultado.data[0];
-const audioUrl = audioInfo.url;
 
-const reproductor = new Audio(audioUrl);
-await reproductor.play();
-```
-
-} catch (error) {
-console.error('Error en la voz neuronal:', error);
-setStatus('chatStatus', 'Error de voz: ' + (error?.message || String(error)));
-}
-}
-
-async function enterApp(user) {
   currentUser = user;
   currentConversation = null;
   showScreen('app');
