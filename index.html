@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+f<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -404,6 +404,59 @@ let kokoroClient = null;
 
 async function hablarConSanta(texto) {
   try {
+    setStatus('chatStatus', 'Generando la voz de NEIDO...');
+
+    if (!kokoroClient) {
+      const { Client } = await import(
+        'https://cdn.jsdelivr.net/npm/@gradio/client/+esm'
+      );
+      kokoroClient = await Client.connect(
+        'igortamara/Kokoro-es-TTS'
+      );
+    }
+
+    const frases = texto
+      .match(/[^.!?]+[.!?]+|[^.!?]+$/g)
+      ?.map(frase => frase.trim())
+      .filter(Boolean) || [texto];
+
+    for (const frase of frases) {
+      if (!voiceEnabled) break;
+
+      const resultado = await kokoroClient.predict(
+        '/generate_first',
+        [frase, 'em_santa', 1, false]
+      );
+
+      const audioUrl = resultado?.data?.[0]?.url;
+
+      if (!audioUrl) {
+        throw new Error('No se ha recibido el audio.');
+      }
+
+      if (!voiceEnabled) break;
+
+      const reproductor = new Audio(audioUrl);
+
+      await new Promise((resolve, reject) => {
+        reproductor.onended = resolve;
+        reproductor.onerror = () =>
+          reject(new Error('No se ha podido reproducir el audio.'));
+
+        reproductor.play().catch(reject);
+      });
+    }
+
+    setStatus('chatStatus', '');
+
+  } catch (error) {
+    console.error('Error en la voz neuronal:', error);
+    setStatus(
+      'chatStatus',
+      'Error de voz: ' + (error?.message || String(error))
+    );
+  }
+}
     setStatus('chatStatus', 'Generando la voz de NEIDO...');
 
     if (!kokoroClient) {
