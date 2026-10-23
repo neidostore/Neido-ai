@@ -397,6 +397,7 @@ $('voiceBtn').addEventListener('click', () => {
   } else {
     $('voiceBtn').textContent = '🔊';
   }
+
 });
 let kokoroClient = null;
 
@@ -408,13 +409,12 @@ kokoroClient = await Client.connect('igortamara/Kokoro-es-TTS');
 }
 
 ```
-const resultado = await kokoroClient.predict('/generate_first', {
-  text: texto,
-  voice: 'em_santa',
-  speed: 1,
-  use_gpu: 'false'
-});
-
+const resultado = await kokoroClient.predict('/generate_first', [
+  texto,
+  'em_santa',
+  1,
+  false
+]);
 const audioInfo = resultado.data[0];
 const audioUrl = audioInfo.url;
 
