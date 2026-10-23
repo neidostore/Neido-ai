@@ -432,7 +432,7 @@ async function hablarConSanta(texto) {
 
       const resultado = await kokoroClient.predict(
         '/generate_first',
-        [frase, 'em_santa', 1, false]
+        [frase, 'em_santa', 1.2, false]
       );
 
       const audioUrl = resultado?.data?.[0]?.url;
