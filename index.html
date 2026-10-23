@@ -404,7 +404,7 @@ let kokoroClient = null;
 async function hablarConSanta(texto) {
 try {
 if (!kokoroClient) {
-const { Client } = await import('https://esm.sh/@gradio/client');
+const { Client } = await import('https://cdn.jsdelivr.net/npm/@gradio/client/+esm');
 kokoroClient = await Client.connect('igortamara/Kokoro-es-TTS');
 }
 
